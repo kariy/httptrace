@@ -1,10 +1,10 @@
-# httptrace - HTTP Network Request Tracer for macOS
+# httptrace
 
-A simple tool to monitor HTTP requests made by any process, similar to `strace` but specifically for network traffic.
+A HTTP network request tracer. It is a simple tool to monitor HTTP requests made by any process, similar to `strace` but specifically for network traffic.
 
 ## How it works
 
-httptrace uses **dynamic library interposition** via `DYLD_INSERT_LIBRARIES` to intercept HTTP traffic at the socket level.
+`httptrace` uses **dynamic library interposition** via `DYLD_INSERT_LIBRARIES` to intercept HTTP traffic at the socket level.
 
 ### Technical Overview
 
@@ -93,14 +93,14 @@ ls -la libhttptrace_hook.dylib
 ## Architecture
 
 ```
-┌─────────────────┐    ┌──────────────┐    ┌─────────────────┐
-│   httptrace CLI    │───▶│ Target App   │───▶│   HTTP Output   │
-│  (Rust)         │    │ + hook.dylib │    │  (parsed)       │
-└─────────────────┘    └──────────────┘    └─────────────────┘
+┌─────────────────┐    ┌──────────────┐    ┌────────────────┐
+│  httptrace CLI  │───▶│ Target App   │───▶│  HTTP Output   │
+│ (Rust)          │    │ + hook.dylib │    │  (parsed)      │
+└─────────────────┘    └──────────────┘    └────────────────┘
                               │
                               ▼
-                       ┌──────────────┐
-                       │ socket calls │
-                       │ send()/recv()│
-                       └──────────────┘
+                       ┌───────────────┐
+                       │ socket calls  │
+                       │ send()/recv() │
+                       └───────────────┘
 ```

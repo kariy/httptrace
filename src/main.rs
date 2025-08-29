@@ -1,6 +1,7 @@
 use clap::Parser;
 use std::env;
 use std::io::{BufRead, BufReader};
+use std::path::Path;
 use std::process::{Command as StdCommand, Stdio};
 
 mod http_parser;
@@ -18,7 +19,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     let args = Args::parse();
 
     // Build the dynamic library path
-    let hook_lib = build_hook_library()?;
+    let hook_lib = get_hook_lib()?;
 
     println!("🔍 Starting ntrace for: {}", args.command);
     println!("📡 Monitoring HTTP requests...\n");
@@ -28,12 +29,11 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     Ok(())
 }
 
-fn build_hook_library() -> Result<String, Box<dyn std::error::Error>> {
-    // Use the pre-built shared library
-    let lib_path = "libntrace_hook.dylib";
+/// Get the pre-built shared library
+fn get_hook_lib() -> Result<String, Box<dyn std::error::Error>> {
+    let lib_path = "libhttptrace_hook.dylib";
 
-    // Check if library exists
-    if !std::path::Path::new(lib_path).exists() {
+    if !Path::new(lib_path).exists() {
         return Err("Hook library not found. Run 'make build' first.".into());
     }
 

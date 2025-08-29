@@ -82,6 +82,7 @@ static void init_hooks(void) {
  *
  * @param data Pointer to socket data buffer
  * @param len Length of data in buffer
+ *
  * @return 1 if data appears to be HTTP, 0 otherwise
  */
 static int is_http_data(const char* data, size_t len) {
@@ -148,6 +149,7 @@ static void log_http_data(const char* direction, int sockfd, const void* data, s
  * @param buf Buffer containing data to send
  * @param len Length of data to send
  * @param flags Socket send flags (passed through to original)
+ *
  * @return Number of bytes sent, or -1 on error (from original send())
  */
 ssize_t send(int sockfd, const void *buf, size_t len, int flags) {
@@ -175,6 +177,7 @@ ssize_t send(int sockfd, const void *buf, size_t len, int flags) {
  * @param buf Buffer to receive data into
  * @param len Maximum length of data to receive
  * @param flags Socket recv flags (passed through to original)
+ *
  * @return Number of bytes received, or -1 on error (from original recv())
  */
 ssize_t recv(int sockfd, void *buf, size_t len, int flags) {
