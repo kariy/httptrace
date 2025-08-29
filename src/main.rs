@@ -7,8 +7,7 @@ mod http_parser;
 use http_parser::HttpRequest;
 
 #[derive(Parser)]
-#[command(name = "ntrace", version)]
-#[command(about = "Network tracer for HTTP requests on macOS")]
+#[command(version, about = "Network tracer for HTTP requests on macOS")]
 struct Args {
     /// Command to execute and trace
     #[arg(short, long, value_name = "COMMAND")]
